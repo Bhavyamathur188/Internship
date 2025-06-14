@@ -1,15 +1,15 @@
-# STEP 1: Import Required Libraries
+# Import Required Libraries
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# STEP 2: API Setup
+# API Setup
 API_KEY = 'f705b8d068bc3277b55e179cc7c33e33' 
 CITY = 'London'
 URL = f"http://api.openweathermap.org/data/2.5/forecast?q={CITY}&appid={API_KEY}&units=metric"
 
-# STEP 3: Fetch Data from OpenWeatherMap API
+# Fetch Data from OpenWeatherMap API
 response = requests.get(URL)
 data = response.json()
 
@@ -18,7 +18,7 @@ if response.status_code != 200 or 'list' not in data:
     print("Failed to retrieve data. Check your API key and city name.")
     exit()
 
-# STEP 4: Extract and Organize Relevant Data
+# Extract and Organize Relevant Data
 forecast_list = data['list']
 weather_data = []
 
@@ -36,7 +36,7 @@ for item in forecast_list:
 df = pd.DataFrame(weather_data)
 df['DateTime'] = pd.to_datetime(df['DateTime'])
 
-# STEP 5: Create Visualizations
+# Create Visualizations
 plt.figure(figsize=(14, 6))
 sns.lineplot(x='DateTime', y='Temperature (°C)', data=df, label='Temperature', color='tomato')
 sns.lineplot(x='DateTime', y='Humidity (%)', data=df, label='Humidity', color='royalblue')
